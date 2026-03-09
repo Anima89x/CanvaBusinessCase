@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Case: Tom Taylor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+            color: #0E1318;
+            overflow-x: hidden;
+        }
+        .canva-gradient-text {
+            background: linear-gradient(135deg, #8B3DFF 0%, #00C4CC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .canva-gradient-bg {
+            background: linear-gradient(135deg, #8B3DFF 0%, #00C4CC 100%);
+        }
+        .clean-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .clean-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* 3D Flip Card CSS */
+        .flip-card {
+            perspective: 1000px;
+            height: 280px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .flip-card-front {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(139, 61, 255, 0.3);
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="w-full bg-white border-b border-gray-200 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-gradient-to-tr from-[#8B3DFF] to-[#00C4CC] flex items-center justify-center text-white">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i>
+                    </div>
+                    <span class="font-bold text-lg tracking-tight ml-2">Tom Taylor <span class="text-gray-400 font-normal hidden sm:inline">| Candidate Case Study</span></span>
+                </div>
+                <div>
+                    <button onclick="document.getElementById('cta-section').scrollIntoView({behavior: 'smooth'})" class="text-sm font-semibold text-slate-600 hover:text-[#8B3DFF] transition-colors">
+                        Connect with Tom &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <!-- Hero Section with Soft Canva Mesh Background -->
+        <div class="relative overflow-hidden bg-white">
+            <!-- Decorative Soft Color Blobs -->
+            <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[80%] rounded-full bg-fuchsia-300/40 blur-[120px] pointer-events-none"></div>
+            <div class="absolute -bottom-[10%] -right-[10%] w-[60%] h-[60%] rounded-full bg-cyan-300/30 blur-[120px] pointer-events-none"></div>
+            <div class="absolute top-[10%] left-[30%] w-[40%] h-[50%] rounded-full bg-yellow-200/40 blur-[100px] pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-8 reveal active">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-sm font-semibold text-slate-700 shadow-sm border border-slate-200">
+                            <span class="flex h-2 w-2 rounded-full bg-[#00C4CC] animate-pulse"></span>
+                            Strategic Account Executive
+                        </div>
+                        
+                        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-slate-900">
+                            Taking Enterprise Deals from <br />
+                            <span class="canva-gradient-text">Chaos to Clarity.</span>
+                        </h1>
+                        
+                        <p class="text-xl text-slate-600 leading-relaxed max-w-2xl">
+                            How Tom Taylor translates £500M+ international macroeconomic data into visual, undeniable business cases that close global C-suite executives.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <button onclick="document.getElementById('metrics').scrollIntoView({behavior: 'smooth'})" class="canva-gradient-bg text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-[#8B3DFF]/20">
+                                Read Case Study
+                            </button>
+                            <a href="https://www.linkedin.com/in/thomastaylor89/" target="_blank" class="bg-white border-2 border-slate-200 text-slate-700 font-bold py-3 px-8 rounded-lg hover:border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn Profile
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="lg:col-span-5 relative reveal active delay-200">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-[#00C4CC] to-[#8B3DFF] rounded-3xl transform rotate-3 scale-105 opacity-10"></div>
+                    <img src="headshot.jpg" 
+                         onerror="this.src='https://placehold.co/600x800/eeeeee/8B3DFF?text=Tom+Taylor'" 
+                         alt="Tom Taylor Headshot" 
+                         class="relative z-10 rounded-3xl shadow-xl border border-white object-cover w-full max-w-md mx-auto aspect-[4/5]" />
+                    
+                    <div class="absolute bottom-6 -left-6 z-20 bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+                        <div class="bg-green-100 p-2 rounded-full">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-semibold uppercase">Quota Attainment</p>
+                            <p class="text-lg font-bold text-slate-900">$8M Net-New Generated</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Interactive Metrics Section -->
+        <div id="metrics" class="bg-slate-50 py-20 border-y border-slate-200 relative z-10">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-sm font-bold tracking-widest text-slate-400 uppercase">Demonstrated Enterprise Impact</h2>
+                    <p class="text-slate-500 mt-2 text-sm italic">Hover over tiles to reveal strategic context</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Flip Card 1 -->
+                    <div class="flip-card reveal delay-100">
+                        <div class="flip-card-inner cursor-pointer">
+                            <div class="flip-card-front">
+                                <i data-lucide="bar-chart-3" class="w-10 h-10 text-[#00C4CC] mb-4"></i>
+                                <div class="text-5xl font-extrabold text-slate-900 mb-2">$50M+</div>
+                                <div class="text-slate-600 font-medium text-lg">Active Pipeline</div>
+                            </div>
+                            <div class="flip-card-back canva-gradient-bg">
+                                <i data-lucide="target" class="w-8 h-8 text-white/80 mb-3"></i>
+                                <h3 class="font-bold text-xl mb-2">Targeted Growth</h3>
+                                <p class="text-white/90 text-sm leading-relaxed">Currently spearheading the data-driven territory plan for the Canadian market, managing cross-border enterprise opportunities and new logo attainment.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 2 -->
+                    <div class="flip-card reveal delay-200">
+                        <div class="flip-card-inner cursor-pointer">
+                            <div class="flip-card-front">
+                                <i data-lucide="globe" class="w-10 h-10 text-[#8B3DFF] mb-4"></i>
+                                <div class="text-5xl font-extrabold text-slate-900 mb-2">£500M</div>
+                                <div class="text-slate-600 font-medium text-lg">Mega-Deal Supported</div>
+                            </div>
+                            <div class="flip-card-back bg-slate-900">
+                                <i data-lucide="landmark" class="w-8 h-8 text-[#8B3DFF] mb-3"></i>
+                                <h3 class="font-bold text-xl mb-2">Global Negotiation</h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">Delivered the critical strategic ecosystem mapping that directly supported the successful closing of a UK-Japan enterprise agreement for a new HQ.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 3 -->
+                    <div class="flip-card reveal delay-300">
+                        <div class="flip-card-inner cursor-pointer">
+                            <div class="flip-card-front">
+                                <i data-lucide="users" class="w-10 h-10 text-[#00C4CC] mb-4"></i>
+                                <div class="text-5xl font-extrabold text-slate-900 mb-2">Tier-1</div>
+                                <div class="text-slate-600 font-medium text-lg">C-Suite Adoption</div>
+                            </div>
+                            <div class="flip-card-back canva-gradient-bg">
+                                <i data-lucide="shield-check" class="w-8 h-8 text-white/80 mb-3"></i>
+                                <h3 class="font-bold text-xl mb-2">Complex Procurement</h3>
+                                <p class="text-white/90 text-sm leading-relaxed">Fostered long-term partnerships with C-level executives at global banks, successfully navigating highly regulated RFP frameworks and compliance cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Solution Architecture -->
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <!-- Left Sidebar -->
+                <div class="lg:col-span-4 space-y-8 reveal">
+                    <div class="clean-card p-6 bg-slate-50/50">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-200 pb-2">Candidate Overview</h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Current Role</span>
+                                <span class="text-slate-900 font-medium">Director, Investment & Trade (NSW)</span>
+                            </li>
+                            <li>
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Target Accounts</span>
+                                <span class="text-slate-900 font-medium">Global Scale-ups, Fortune 500</span>
+                            </li>
+                            <li>
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Avg Sales Cycle</span>
+                                <span class="text-slate-900 font-medium">9-18 Months</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clean-card p-6 border-t-4 border-t-[#8B3DFF]">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4">Tech & AI Stack</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-700">Canva Worksuite</span>
+                                <span class="text-xs bg-[#8B3DFF]/10 text-[#8B3DFF] font-bold px-2 py-1 rounded">Expert</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-700">Salesforce / MEDDPICC</span>
+                                <span class="text-xs bg-slate-100 text-slate-600 font-bold px-2 py-1 rounded">Advanced</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-700">Google AI Studio</span>
+                                <span class="text-xs bg-slate-100 text-slate-600 font-bold px-2 py-1 rounded">Prototyping</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-700">Antigravity (IDE)</span>
+                                <span class="text-xs bg-[#00C4CC]/10 text-[#00C4CC] font-bold px-2 py-1 rounded">Applied</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content -->
+                <div class="lg:col-span-8 reveal delay-100">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">The SaaS Motion is Universal.</h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        Whether brokering an international Foreign Direct Investment deal or closing a multi-year software deployment, the mechanics of enterprise sales remain identical: multi-threaded stakeholder alignment, complex legal negotiations, and turning chaotic data into data-driven storytelling.
+                    </p>
+                    
+                    <div class="space-y-8 mt-10">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 bg-[#00C4CC]/10 p-2 rounded-lg">
+                                <i data-lucide="expand" class="w-6 h-6 text-[#00C4CC]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Account Expansion (Land & Expand)</h3>
+                                <p class="text-slate-600 leading-relaxed">Demonstrated success growing initial footprints into major regional operations, specifically guiding a Sydney quantum tech firm to expand via strategic follow-on government grants and continued investment.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 bg-[#8B3DFF]/10 p-2 rounded-lg">
+                                <i data-lucide="mic" class="w-6 h-6 text-[#8B3DFF]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Executive Evangelism</h3>
+                                <p class="text-slate-600 leading-relaxed">Acting as the public face of NSW at major North American tech conferences. Coached 30+ tech CEOs on enterprise value propositions and facilitated curated C-suite pitches resulting in multi-million-dollar adoptions.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 bg-[#00C4CC]/10 p-2 rounded-lg">
+                                <i data-lucide="file-check-2" class="w-6 h-6 text-[#00C4CC]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Rigorous Pipeline Hygiene</h3>
+                                <p class="text-slate-600 leading-relaxed">Strict adherence to Salesforce forecasting and data-driven account planning. Proven ability to navigate highly regulated RFP frameworks and complex legal redlines for Tier-1 institutions.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <blockquote class="mt-12 p-8 bg-slate-50 border-l-4 border-[#8B3DFF] rounded-r-2xl italic text-lg text-slate-700">
+                        "For the last four years, my 'product' has been a geographic region. Selling a CEO on moving operations 15,000 kilometers away requires taking thousands of chaotic data points and turning them into one clear, visual, undeniable narrative. That ability to turn chaos to clarity is exactly what Canva Enterprise does."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Australia-Canada Bridge Section -->
+        <div class="py-20 bg-white border-t border-slate-200 overflow-hidden relative">
+            <!-- Subtle background map/connection styling -->
+            <div class="absolute right-0 top-0 opacity-[0.03] pointer-events-none">
+                <svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 100 200 Q 400 50 700 200" stroke="#00C4CC" stroke-width="4" fill="none" stroke-dasharray="10 10"/>
+                </svg>
+            </div>
+            
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">The Australia-Canada Bridge</h2>
+                    <p class="text-xl text-slate-600">Bridging Canva's global headquarters in Sydney with the expanding Canadian enterprise market.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal delay-200">
+                    <div class="clean-card p-8 bg-gradient-to-br from-slate-50 to-white relative">
+                        <div class="absolute -top-6 -left-6 bg-white p-3 rounded-full shadow-lg border border-slate-100">
+                            <i data-lucide="map-pin" class="w-8 h-8 text-[#8B3DFF]"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 mt-2">Deep Ecosystem Integration</h3>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            As a Committee Member for the <strong>Canadian-Australian Chamber of Commerce (CACC)</strong> and a Director for Investment NSW, I spend every day translating Australian innovation into Canadian enterprise value.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            I cultivate strategic deal flow through innovation hubs, notably driving initiatives within Sydney’s <strong>Tech Central precinct</strong>—the very neighborhood Canva calls home—to accelerate North American enterprise adoption.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center space-y-6">
+                        <div class="flex items-center w-full max-w-md justify-between">
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-3 mx-auto shadow-inner border border-slate-200">
+                                    <i data-lucide="building-2" class="w-8 h-8 text-slate-700"></i>
+                                </div>
+                                <span class="font-bold text-slate-900 block">Sydney, AUS</span>
+                                <span class="text-xs text-slate-500 uppercase tracking-widest">Canva HQ</span>
+                            </div>
+                            
+                            <div class="flex-grow flex flex-col items-center px-4">
+                                <i data-lucide="plane" class="w-6 h-6 text-[#00C4CC] mb-2"></i>
+                                <div class="w-full h-1 bg-gradient-to-r from-[#00C4CC] to-[#8B3DFF] rounded-full relative">
+                                    <div class="absolute inset-0 bg-white/50 animate-pulse"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-2xl canva-gradient-bg flex items-center justify-center mb-3 mx-auto shadow-lg shadow-[#8B3DFF]/30 text-white">
+                                    <i data-lucide="target" class="w-8 h-8"></i>
+                                </div>
+                                <span class="font-bold text-slate-900 block">Toronto, CAN</span>
+                                <span class="text-xs text-slate-500 uppercase tracking-widest">Target Market</span>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-[#8B3DFF] uppercase tracking-widest bg-[#8B3DFF]/10 px-4 py-1 rounded-full">15,000 km Bridge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div id="cta-section" class="py-24 bg-slate-900 text-white relative overflow-hidden reveal">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-[#8B3DFF] rounded-full filter blur-[150px] opacity-30"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#00C4CC] rounded-full filter blur-[150px] opacity-20"></div>
+            
+            <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Ready to see the full strategy?</h2>
+                <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+                    Let's discuss my 30-60-90 day territory plan to capture the Canadian enterprise market and build a predictable $2M+ pipeline.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="mailto:tomtaylor89@gmail.com" class="canva-gradient-bg text-white font-bold py-4 px-10 rounded-lg hover:scale-105 transition-transform shadow-xl">
+                        Schedule an Interview
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 py-8 text-center text-sm text-slate-500">
+        <p>Built interactively using Google Antigravity & AI Studio by Tom Taylor.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            
+            // Intersection Observer for Scroll Animations
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealOnScroll.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
