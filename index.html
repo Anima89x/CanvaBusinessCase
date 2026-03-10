@@ -34,44 +34,79 @@
             transform: translateY(-2px);
         }
 
-        /* 3D Flip Card CSS */
-        .flip-card {
+        /* NEW: Story Tile Interaction CSS */
+        .story-tile {
             perspective: 1000px;
-            height: 280px;
+            height: 160px; /* Default collapsed height */
+            width: 100%;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
-        .flip-card-inner {
+        .story-tile.is-expanded {
+            height: 320px; /* Expanded height */
+        }
+        .story-tile-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
-        .flip-card:hover .flip-card-inner {
+        .story-tile.flipped .story-tile-inner {
             transform: rotateY(180deg);
         }
-        .flip-card-front, .flip-card-back {
+        .story-tile-front, .story-tile-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             border-radius: 1rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
         }
-        .flip-card-front {
+        .story-tile-front {
             background-color: white;
             border: 1px solid #E5E7EB;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
-        .flip-card-back {
+        .story-tile-back {
             transform: rotateY(180deg);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             color: white;
-            border: none;
             box-shadow: 0 10px 25px -5px rgba(139, 61, 255, 0.3);
+        }
+        
+        /* Front layout transitions */
+        .front-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .story-tile.is-expanded .front-center {
+            flex: 0 0 auto;
+            transform: scale(0.9) translateY(-5px);
+            margin-bottom: 0.25rem;
+        }
+        .front-details {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .story-tile.is-expanded .front-details {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            transition-delay: 0.1s;
         }
 
         /* Scroll Reveal Animations */
@@ -87,6 +122,7 @@
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
         
         /* Interactive floating badge */
         .floating-badge {
@@ -149,8 +185,8 @@
                         </p>
                         
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                            <button onclick="document.getElementById('metrics').scrollIntoView({behavior: 'smooth'})" class="canva-gradient-bg text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-[#8B3DFF]/20">
-                                Read Case Study
+                            <button onclick="document.getElementById('translation').scrollIntoView({behavior: 'smooth'})" class="canva-gradient-bg text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-[#8B3DFF]/20">
+                                View Strategy Translation
                             </button>
                             <a href="https://www.linkedin.com/in/thomastaylor89/" target="_blank" class="bg-white border-2 border-slate-200 text-slate-700 font-bold py-3 px-8 rounded-lg hover:border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
                                 <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn Profile
@@ -190,106 +226,216 @@
         </div>
         </div>
 
-        <!-- Interactive Metrics Section -->
-        <div id="metrics" class="bg-slate-50 py-20 border-y border-slate-200 relative z-10">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-sm font-bold tracking-widest text-slate-400 uppercase">Demonstrated Enterprise Impact</h2>
-                    <p class="text-slate-500 mt-2 text-sm italic">Hover over tiles to reveal strategic context</p>
+        <!-- NEW: The Translation Engine (8 Tiles) -->
+        <div id="translation" class="bg-slate-50 py-24 border-y border-slate-200 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Translating Government Execution to SaaS Pipeline</h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">The product changes, but the enterprise motion remains the same. <span class="font-semibold text-[#8B3DFF]">Hover & click the tiles</span> to see how public sector strategy translates to B2B revenue.</p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Row 1: Original 3 Tiles -->
-                    <div class="flip-card reveal delay-100">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="bar-chart-3" class="w-10 h-10 text-[#00C4CC] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">$50M+</div>
-                                <div class="text-slate-600 font-medium text-lg">Active Pipeline</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Tile 1 -->
+                    <div class="story-tile reveal delay-100">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">The Buyer Mindset</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Managed six-figure budgets to execute international trade missions, directly procuring and managing global service providers.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flip-card-back canva-gradient-bg">
-                                <i data-lucide="target" class="w-8 h-8 text-white/80 mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Targeted Growth</h3>
-                                <p class="text-white/90 text-sm leading-relaxed">Currently spearheading the data-driven territory plan for the Canadian market, managing cross-border enterprise opportunities and new logo attainment.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card reveal delay-200">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="globe" class="w-10 h-10 text-[#8B3DFF] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">£500M</div>
-                                <div class="text-slate-600 font-medium text-lg">Mega-Deal Supported</div>
-                            </div>
-                            <div class="flip-card-back bg-slate-900">
-                                <i data-lucide="landmark" class="w-8 h-8 text-[#8B3DFF] mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Global Negotiation</h3>
-                                <p class="text-slate-300 text-sm leading-relaxed">Delivered the critical strategic ecosystem mapping that directly supported the successful closing of a UK-Japan enterprise agreement for a new HQ.</p>
+                            <div class="story-tile-back bg-gradient-to-br from-[#00C4CC] to-[#8B3DFF]">
+                                <i data-lucide="shopping-bag" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">I understand the buyer's journey from the inside. I know how to align with procurement, justify ROI, and accelerate the purchasing process.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flip-card reveal delay-300">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="users" class="w-10 h-10 text-[#00C4CC] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">Tier-1</div>
-                                <div class="text-slate-600 font-medium text-lg">C-Suite Adoption</div>
+                    <!-- Tile 2 -->
+                    <div class="story-tile reveal delay-200">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="network" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Multi-Threading</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Drove key international initiatives, including executive roundtables and numerous cross-border delegations, coordinating NSW and Canadian stakeholders.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flip-card-back canva-gradient-bg">
-                                <i data-lucide="shield-check" class="w-8 h-8 text-white/80 mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Complex Procurement</h3>
-                                <p class="text-white/90 text-sm leading-relaxed">Fostered long-term partnerships with C-level executives at global banks, successfully navigating highly regulated RFP frameworks and compliance cycles.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Row 2: New 3 Tiles -->
-                    <div class="flip-card reveal delay-100">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="briefcase" class="w-10 h-10 text-[#8B3DFF] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">8 Major</div>
-                                <div class="text-slate-600 font-medium text-lg">New Logos Secured</div>
-                            </div>
-                            <div class="flip-card-back bg-slate-900">
-                                <i data-lucide="award" class="w-8 h-8 text-[#8B3DFF] mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Deal Execution</h3>
-                                <p class="text-slate-300 text-sm leading-relaxed">Managed full sales cycles targeting C-suite executives, successfully negotiating 8 major corporate adoptions and a landmark export contract in the last 12 months.</p>
+                            <div class="story-tile-back bg-gradient-to-br from-[#FF0099] to-[#FF7A00]">
+                                <i data-lucide="network" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Expert at navigating intricate organizations. I build consensus across borders and departments to drive complex initiatives forward.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flip-card reveal delay-200">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="expand" class="w-10 h-10 text-[#00C4CC] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">Expand</div>
-                                <div class="text-slate-600 font-medium text-lg">Account Growth Strategy</div>
+                    <!-- Tile 3 -->
+                    <div class="story-tile reveal delay-300">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="globe" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Enterprise Scale</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Facilitated massive-scale, high-visibility economic projects, including a £500M international investment and a $100M rapid-response facility.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flip-card-back canva-gradient-bg">
-                                <i data-lucide="trending-up" class="w-8 h-8 text-white/80 mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Land & Expand</h3>
-                                <p class="text-white/90 text-sm leading-relaxed">Drove significant account growth for a tech enterprise, expanding their initial small-team footprint into a major regional operation via follow-on investment.</p>
+                            <div class="story-tile-back bg-gradient-to-br from-[#8B3DFF] to-[#FF0099]">
+                                <i data-lucide="globe" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Built for high-stakes execution. I am comfortable navigating uncertainty, managing long-cycle engagements, and driving multi-million dollar deals.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flip-card reveal delay-300">
-                        <div class="flip-card-inner cursor-pointer">
-                            <div class="flip-card-front">
-                                <i data-lucide="mic" class="w-10 h-10 text-[#8B3DFF] mb-4"></i>
-                                <div class="text-5xl font-extrabold text-slate-900 mb-2">30+</div>
-                                <div class="text-slate-600 font-medium text-lg">Tech CEOs Coached</div>
+                    <!-- Tile 4 -->
+                    <div class="story-tile reveal delay-400">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="mic" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Executive Storytelling</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Distilled complex policy and market trends into strategic briefings for the highest levels of government, including direct feeds for head-of-state visits.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flip-card-back bg-slate-900">
-                                <i data-lucide="presentation" class="w-8 h-8 text-[#8B3DFF] mb-3"></i>
-                                <h3 class="font-bold text-xl mb-2">Executive Evangelism</h3>
-                                <p class="text-slate-300 text-sm leading-relaxed">Designed and delivered targeted executive briefings. Facilitated curated C-suite pitches that translated complex value propositions into multi-million-dollar adoptions.</p>
+                            <div class="story-tile-back bg-gradient-to-br from-[#00C4CC] to-[#0055FF]">
+                                <i data-lucide="mic" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Bringing chaos to clarity. I synthesize complex info into compelling, customer-ready stories that captivate executive audiences.</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Tile 5 -->
+                    <div class="story-tile reveal delay-100">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="target" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Account Planning</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Analyzed shifting global market landscapes and economic trends to strategically target new high-growth verticals for foreign direct investment.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="story-tile-back bg-gradient-to-br from-[#FF7A00] to-[#8B3DFF]">
+                                <i data-lucide="target" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Data-driven account planning. I translate macro market dynamics into targeted outreach, rigorous territory management, and viable pipeline generation.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tile 6 -->
+                    <div class="story-tile reveal delay-200">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="handshake" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Complex Negotiation</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Ran international programs under strict budgetary constraints, successfully negotiating on price and value with a global network of vendors.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="story-tile-back bg-gradient-to-br from-[#FF0099] to-[#00C4CC]">
+                                <i data-lucide="handshake" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">A strategic negotiator who balances constraints with premium value. I lead complex negotiations to ensure mutually beneficial partnerships.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tile 7 -->
+                    <div class="story-tile reveal delay-300">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="search" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">Rigorous Discovery</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Conducted strategic discovery with corporate CEOs, analyzing 3-year CapEx data to forecast economic impact and tailor support solutions.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="story-tile-back bg-gradient-to-br from-[#0055FF] to-[#FF0099]">
+                                <i data-lucide="search" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Relentless qualification and accurate forecasting. I conduct deep executive discovery to prioritize high-value opportunities and manage pipeline.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tile 8 -->
+                    <div class="story-tile reveal delay-400">
+                        <div class="story-tile-inner">
+                            <div class="story-tile-front">
+                                <div class="front-center">
+                                    <div class="bg-slate-100 p-3 rounded-full mb-3 text-slate-600">
+                                        <i data-lucide="award" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 text-center leading-tight">The Deal Quarterback</h3>
+                                </div>
+                                <div class="front-details">
+                                    <p class="text-sm text-slate-600 leading-relaxed text-center">Led comprehensive investment projects over 12-18 month lifecycles, orchestrating efforts across subject matter experts and distinct internal teams.</p>
+                                    <div class="mt-auto flex justify-center items-center gap-2 text-[#8B3DFF] text-sm font-bold border-t border-slate-100 pt-3">
+                                        Click to translate <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="story-tile-back bg-gradient-to-br from-[#8B3DFF] to-[#00C4CC]">
+                                <i data-lucide="award" class="w-8 h-8 mb-4 opacity-80"></i>
+                                <h3 class="font-bold text-xl mb-3">SaaS Translation</h3>
+                                <p class="text-sm text-white/95 leading-relaxed">Enterprise sales is a team sport. I seamlessly collaborate with internal cross-functional teams to deliver cohesive, winning solutions to the client.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -470,15 +616,14 @@
     </footer>
 
     <script>
-        // Initialize Lucide Icons
+        // Initialize Lucide Icons & Interactions
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
             
-            // Intersection Observer for Scroll Animations
+            // --- SCROLL REVEAL ANIMATIONS ---
             const revealElements = document.querySelectorAll('.reveal');
-            
             const revealOptions = {
                 threshold: 0.15,
                 rootMargin: "0px 0px -50px 0px"
@@ -486,18 +631,53 @@
 
             const revealOnScroll = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    } else {
+                    if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Stop observing once animated
                         observer.unobserve(entry.target);
                     }
                 });
             }, revealOptions);
 
-            revealElements.forEach(el => {
-                revealOnScroll.observe(el);
+            revealElements.forEach(el => revealOnScroll.observe(el));
+
+            // --- TILE INTERACTION LOGIC (HOVER/CLICK/TAP) ---
+            const tiles = document.querySelectorAll('.story-tile');
+            
+            tiles.forEach(tile => {
+                // Handle desktop hover to expand
+                tile.addEventListener('mouseenter', () => {
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        tile.classList.add('is-expanded');
+                    }
+                });
+                
+                // Handle desktop leave to collapse & reset flip
+                tile.addEventListener('mouseleave', () => {
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        // Only collapse if the tile is NOT flipped
+                        if (!tile.classList.contains('flipped')) {
+                            tile.classList.remove('is-expanded');
+                        }
+                    }
+                });
+
+                // Handle click to flip (or tap on mobile)
+                tile.addEventListener('click', () => {
+                    // Mobile Touch logic: First tap expands, second tap flips
+                    if (window.matchMedia('(hover: none)').matches) {
+                        if (!tile.classList.contains('is-expanded')) {
+                            // Collapse all other tiles first
+                            tiles.forEach(t => {
+                                if (t !== tile) t.classList.remove('is-expanded', 'flipped');
+                            });
+                            tile.classList.add('is-expanded');
+                            return; // Stop execution so it doesn't flip immediately
+                        }
+                    }
+                    
+                    // Toggle the 3D flip
+                    tile.classList.toggle('flipped');
+                });
             });
         });
     </script>
